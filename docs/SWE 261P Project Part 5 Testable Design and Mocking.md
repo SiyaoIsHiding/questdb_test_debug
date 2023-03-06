@@ -10,7 +10,7 @@
 **GitHub username: [SiyaoIsHiding](https://github.com/SiyaoIsHiding), [SoniaSun810](https://github.com/SoniaSun810), [alimhtsai](https://github.com/alimhtsai)**
 
 **Table of Contents**
-+ [1. Testable Design](#1-Testable Design)
++ [1.Testable Design](#1-Testable Design)
     + [1.1 Aspects to Make a Testable Design](#11-Aspects to Make a Testable Design)
     + [1.2 Goals to Make a Testable Design](#12-Goals to Make a Testable Design)
 + [2. Mocking](#2-Mocking)
