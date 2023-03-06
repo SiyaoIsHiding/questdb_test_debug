@@ -9,19 +9,21 @@
 
 **GitHub username: [SiyaoIsHiding](https://github.com/SiyaoIsHiding), [SoniaSun810](https://github.com/SoniaSun810), [alimhtsai](https://github.com/alimhtsai)**
 
+
 **Table of Contents**
-+ [1. Continuous Integration Overview](#1-continuous-integration-overview)
-  + [1.1 What is Continuous Integration (CI)?](#11-what-is-continuous-integration-ci)
-  + [1.2 Why do Continuous Integration (CI)?](#12-why-do-continuous-integration-ci)
-  + [1.3 Common practices of Continuous Integration (CI)](#13-common-practices-of-continuous-integration-ci)
-+ [2. Our Github Action 1: Maven Build and Test](#2-our-github-action-1-maven-build-and-test)
-  + [2.1 Configuration](#21-configuration)
-  + [2.2 Outcome](#22-outcome)
-+ [3. Our Github Action 2: Markdown To PDF](#3-our-github-action-2-markdown-to-pdf)
-  + [3.1 Configuration](#31-configuration)
-  + [3.2 Outcome](#32-outcome)
-+ [4. Existing Github Action: Danger - Validate PR Title](#4-existing-github-action-danger---validate-pr-title)
-+ [5. Existing Azure Pipelines](#5-existing-azure-pipelines)
++ [1. Testable Design](#1-testable-design)
+    + [1.1 Aspects to Make a Testable Design](#11-aspects-to-make-a-testable-design)
+    + [1.2 Goals to Make a Testable Design](#12-goals-to-make-a-testable-design)
++ [2. Mocking](#2-mocking)
+    + [2.1 Definition of Mocking](#21-definition-of-mocking)
+    + [2.2 The Utility of Mocking](#22-the-utility-of-mocking)
+    + [2.3 Mock Testing vs Traditional Unit Testing](#23-mock-testing-vs-traditional-unit-testing)
++ [3. Documentation of Existing Code](#3-documentation-of-existing-code)
+    + [3.1 A Difficult-Testing Code Example](#31-a-difficult-testing-code-example)
+    + [3.2 Advice to Fix the Code and Implementation](#32-advice-to-fix-the-code-and-implementation)
++ [4. New Test Cases](#4-new-test-cases)
+    + [4.1 Mocking](#41-mocking)
+    + [4.2 Testable Design](#42-testable-design)
 
 ----------
 <p style="page-break-after:always"></p>
