@@ -1,3 +1,8 @@
+<div align="center">
+  <a href="https://questdb.io/" target="blank"><img alt="QuestDB Logo" src="https://questdb.io/img/questdb-logo-themed.svg" width="305px"/></a>
+</div>
+<p>&nbsp;</p>
+
 # SWE 261P Project Part 5. Testable Design. Mocking of QuestDB
 
 **Team Member: Jane He, Fengnan Sun, Ming-Hua Tsai**
