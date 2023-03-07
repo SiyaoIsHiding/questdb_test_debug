@@ -163,7 +163,7 @@ We modified the code in the following steps:
 
 2. Overload the constructor of `IODispatcherLinux` so that a mock object of `Epoll` can be passed in. By overloading the constructor of the class, we allow a mock object to be passed in as a parameter to the constructor. The developer can isolate and test individual components of the code without needing to involve all the dependencies of the component being tested.
 
-3. Deleted the `final` modifier of `Epoll` class. Final classes are typically designed to provide specific behavior that cannot be altered by other classes, so creating a mock object that overrides the behavior of a final class can lead to unexpected results. Therefore, in order to create a mock object of `Epoll`, we delete the `final` modifier of it. 
+3. Deleted the `final` modifier of `Epoll` class. As final class cannot be mocked, we suggest to delete the final modifier to make it testable.
 
 **Modified `IODispatcherLinux` class**
 
@@ -273,7 +273,7 @@ public class MockedEpollTest {
 
 To make the `Epoll` object work on a MacOS machine, we need to use a mock object because the `IoDispatcherLinux` can only be initialized on a Linux machine. Thus, to create testable code, we must mock objects.
 
-We added 1 JUnit test cases in `io.questdb.network.MockedEpollTest` to test the functionality of `IODispatcherLinux` and `Epoll`. First, we initialized the `ioDispatcherLinux` object with the mocked `Epoll` and `ioContextFactory`. We then tested the `io.questdb.network.IODispatcherLinux#close` function to confirm that both the `ioDispatcherLinux` and `Epoll` objects are closed properly. 
+We added 1 JUnit test cases in `io.questdb.network.MockedEpollTest` to test the functionality of `IODispatcherLinux` and `Epoll`. First, we initialized the `ioDispatcherLinux` object with the mocked `Epoll` and `ioContextFactory`. We then tested the `io.questdb.network.IODispatcherLinux#close` function to confirm that the `ioDispatcherLinux` can be closed properly, and `Epoll.closed()` is called as expected.
 
 By implementation of these tests, we increased the method coverage of `Epoll` and `IoDispatcherLinux` by 10% and 15% respectively, which was 0% previously. 
 
