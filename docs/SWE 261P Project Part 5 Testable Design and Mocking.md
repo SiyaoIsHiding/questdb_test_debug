@@ -278,7 +278,7 @@ public class MockedEpollTest {
 
 To make the `Epoll` object work on a MacOS machine, we need to use a mock object because the `IoDispatcherLinux` can only be initialized on a Linux machine. Thus, to create testable code, we must mock objects.
 
-We added 2 JUnit test cases in `io.questdb.network.MockedEpollTest` to test the functionality of `IODispatcherLinux` and `Epoll`. First, we initialized the `ioDispatcherLinux` object with the mocked `Epoll` and `ioContextFactory`. We then tested the `io.questdb.network.IODispatcherLinux#close` function to confirm that both the `ioDispatcherLinux` and `Epoll` objects are closed properly. 
+We added 1 JUnit test cases in `io.questdb.network.MockedEpollTest` to test the functionality of `IODispatcherLinux` and `Epoll`. First, we initialized the `ioDispatcherLinux` object with the mocked `Epoll` and `ioContextFactory`. We then tested the `io.questdb.network.IODispatcherLinux#close` function to confirm that both the `ioDispatcherLinux` and `Epoll` objects are closed properly. 
 
 By implementation of these tests, we increased the method coverage of `Epoll` and `IoDispatcherLinux` by 10% and 15% respectively, which was 0% previously. 
 
@@ -302,13 +302,7 @@ public class MockedEpollTest {
     public void testCloseioDispatcherLinux() {
         ioDispatcherLinux.close();
         Assert.assertTrue("closed", ioDispatcherLinux.closed);
-    }
-
-    // Test methods in Class Epoll
-    @Test
-    public void testClose(){
-        ioDispatcherLinux.close();
-        verify(ioDispatcherLinux.epoll, times(1)).close();
+	verify(epoll, times(1)).close();
     }
 }
 ```
