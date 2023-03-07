@@ -166,11 +166,6 @@ We modified the code in the following steps:
 3. Deleted the `final` modifier of `Epoll` class. Final classes are typically designed to provide specific behavior that cannot be altered by other classes, so creating a mock object that overrides the behavior of a final class can lead to unexpected results. Therefore, in order to create a mock object of `Epoll`, we delete the `final` modifier of it. 
 
 **Modified `IODispatcherLinux` class**
-<pre java> 
-public class IODispatcherLinux<C extends IOContext<C>> extends AbstractIODispatcher<C> {
-    private static final int EVM_DEADLINE = 1;}
-sample <b>sample</b> sample
-</pre>
 
 ```java
 public class IODispatcherLinux<C extends IOContext<C>> extends AbstractIODispatcher<C> {
@@ -302,7 +297,7 @@ public class MockedEpollTest {
     public void testCloseioDispatcherLinux() {
         ioDispatcherLinux.close();
         Assert.assertTrue("closed", ioDispatcherLinux.closed);
-	verify(epoll, times(1)).close();
+	verify(ioDispatcherLinux.epoll, times(1)).close();
     }
 }
 ```
