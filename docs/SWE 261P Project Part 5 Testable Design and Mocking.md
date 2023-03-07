@@ -101,7 +101,7 @@ public class IODispatcherLinux<C extends IOContext<C>> extends AbstractIODispatc
     private static final int EVM_ID = 0;
     private static final int EVM_OPERATION_ID = 2;
     protected final LongMatrix pendingEvents = new LongMatrix(3);
-    **private final Epoll epoll;**
+    private final Epoll epoll;
     // the final ids are shifted by 1 bit which is reserved to distinguish socket operations (0) and suspend events (1);
     // id 0 is reserved for operations on the server fd
     private long idSeq = 1;
@@ -111,7 +111,7 @@ public class IODispatcherLinux<C extends IOContext<C>> extends AbstractIODispatc
             IOContextFactory<C> ioContextFactory
     ) {
         super(configuration, ioContextFactory);
-        **this.epoll = new Epoll(configuration.getEpollFacade(), configuration.getEventCapacity());** 
+        this.epoll = new Epoll(configuration.getEpollFacade(), configuration.getEventCapacity());
         registerListenerFd();
     }
 ```
@@ -119,7 +119,7 @@ public class IODispatcherLinux<C extends IOContext<C>> extends AbstractIODispatc
 **Original `Epoll` class**
 
 ```java
-**public final class Epoll implements Closeable** {
+public final class Epoll implements Closeable {
     private static final Log LOG = LogFactory.getLog(Epoll.class);
 
     private final int capacity;
@@ -147,9 +147,9 @@ In the context of QuestDB, Epoll is used in the `IODispatcherLinux` class to han
 
 However, in the original implementation of class `IODispatcherLinux` of QuestDB (src/main/java/io/questdb/network/IODispatcherLinux.java), it is not possible to test the interaction between `IODispatcherLinux` and `Epoll` for the following reasons:
 
-1. `Epoll` is a `private final` field of `IODispatcherLinux`, meaning that it cannot be directly accessed or modified from outside the class. This makes it difficult to write tests that can verify the behavior of the `IODispatcherLinux` ****class when interacting with the `Epoll` field.
+1. `Epoll` is a `private final` field of `IODispatcherLinux`, meaning that it cannot be directly accessed or modified from outside the class. This makes it difficult to write tests that can verify the behavior of the `IODispatcherLinux` **class when interacting with the `Epoll` field**.
 
-2. `Epoll` is instantiated as a `new` object in the constructor of `IODispatcherLinux`, which means that it is tightly coupled to the implementation of `IODispatcherLinux`. This makes it difficult to substitute `Epoll` ****with a test double or a mock object, which would allow for more flexible and targeted testing.
+2. `Epoll` is instantiated as a `new` object in the constructor of `IODispatcherLinux`, which means that it is tightly coupled to the implementation of `IODispatcherLinux`. This makes it difficult to substitute `Epoll` **with a test double or a mock object, which would allow for more flexible and targeted testing**.
 
 3. `Epoll` is a `final` class. Since a `final` class cannot be extended or subclassed, it cannot be mocked using most mocking frameworks, which typically rely on subclassing or extending the original class to create a mock object.
 
@@ -166,6 +166,11 @@ We modified the code in the following steps:
 3. Deleted the `final` modifier of `Epoll` class. Final classes are typically designed to provide specific behavior that cannot be altered by other classes, so creating a mock object that overrides the behavior of a final class can lead to unexpected results. Therefore, in order to create a mock object of `Epoll`, we delete the `final` modifier of it. 
 
 **Modified `IODispatcherLinux` class**
+<pre java> 
+public class IODispatcherLinux<C extends IOContext<C>> extends AbstractIODispatcher<C> {
+    private static final int EVM_DEADLINE = 1;}
+sample <b>sample</b> sample
+</pre>
 
 ```java
 public class IODispatcherLinux<C extends IOContext<C>> extends AbstractIODispatcher<C> {
@@ -173,12 +178,12 @@ public class IODispatcherLinux<C extends IOContext<C>> extends AbstractIODispatc
     private static final int EVM_ID = 0;
     private static final int EVM_OPERATION_ID = 2;
     protected final LongMatrix pendingEvents = new LongMatrix(3);
-    **protected final Epoll epoll;**
+    protected final Epoll epoll;
     // the final ids are shifted by 1 bit which is reserved to distinguish socket operations (0) and suspend events (1);
     // id 0 is reserved for operations on the server fd
     private long idSeq = 1;
 
-    **public IODispatcherLinux(
+    public IODispatcherLinux(
             IODispatcherConfiguration configuration,
             IOContextFactory<C> ioContextFactory,
             Epoll epoll
@@ -186,7 +191,7 @@ public class IODispatcherLinux<C extends IOContext<C>> extends AbstractIODispatc
         super(configuration, ioContextFactory);
         this.epoll = epoll;
         registerListenerFd();
-    }**
+    }
 
     public IODispatcherLinux(
             IODispatcherConfiguration configuration,
@@ -198,10 +203,10 @@ public class IODispatcherLinux<C extends IOContext<C>> extends AbstractIODispatc
     }
 ```
 
-**Modified `Epoll` class**
+Modified `Epoll` class
 
 ```java
-**public class Epoll implements Closeable** {
+public class Epoll implements Closeable {
     private static final Log LOG = LogFactory.getLog(Epoll.class);
 
     private final int capacity;
@@ -292,14 +297,14 @@ public class MockedEpollTest {
         ioDispatcherLinux = new IODispatcherLinux(configuration, ioContextFactory, epoll);
     }
 		
-		// Test methods in Class ioDispatcherLinux
-		@Test
+    // Test methods in Class ioDispatcherLinux
+    @Test
     public void testCloseioDispatcherLinux() {
         ioDispatcherLinux.close();
         Assert.assertTrue("closed", ioDispatcherLinux.closed);
     }
 
-		// Test methods in Class Epoll
+    // Test methods in Class Epoll
     @Test
     public void testClose(){
         ioDispatcherLinux.close();
