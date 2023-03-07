@@ -163,7 +163,7 @@ We modified the code in the following steps:
 
 2. Overload the constructor of `IODispatcherLinux` so that a mock object of `Epoll` can be passed in. By overloading the constructor of the class, we allow a mock object to be passed in as a parameter to the constructor. The developer can isolate and test individual components of the code without needing to involve all the dependencies of the component being tested.
 
-3. Deleted the `final` modifier of `Epoll` class. As final class cannot be mocked, we suggest to delete the final modifier to make it testable.
+3. Deleted the `final` modifier of `Epoll` class. As a final class cannot be mocked, we suggest to delete the final modifier to make Epoll testable.
 
 **Modified `IODispatcherLinux` class**
 
