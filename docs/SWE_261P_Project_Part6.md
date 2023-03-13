@@ -3,7 +3,7 @@
 </div>
 <p>&nbsp;</p>
 
-# SWE 261P Project Part 6: Static Analyzers OR Mutation Testing of QuestDB
+# SWE 261P Project Part 6: Static Analyzers of QuestDB
 
 **Team Member: Jane He, Fengnan Sun, Ming-Hua Tsai**
 
