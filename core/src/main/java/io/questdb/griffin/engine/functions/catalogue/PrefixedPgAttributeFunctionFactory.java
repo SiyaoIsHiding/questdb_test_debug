@@ -22,26 +22,12 @@
  *
  ******************************************************************************/
 
-package io.questdb.std;
+package io.questdb.griffin.engine.functions.catalogue;
 
-public abstract class AbstractLockable {
-    private static final long TARGET_SEQUENCE_OFFSET;
-    private int srcSequence;
-    @SuppressWarnings({"FieldCanBeLocal", "unused"})
-    // to "lock" the entry thread must successfully CAS targetSequence form "srcSequence" value
-    // to "srcSequence+1". Executing thread must not be changing value of "srcSequence"
-    private int tgtSequence;
+public class PrefixedPgAttributeFunctionFactory extends PgAttributeFunctionFactory {
 
-    public boolean tryLock() {
-        return Unsafe.cas(this, TARGET_SEQUENCE_OFFSET, srcSequence, srcSequence + 1);
-    }
-
-    protected void of(int initialSequence) {
-        this.tgtSequence = initialSequence;
-        this.srcSequence = initialSequence;
-    }
-
-    static {
-        TARGET_SEQUENCE_OFFSET = Unsafe.getFieldOffset(AbstractLockable.class, "tgtSequence");
+    @Override
+    public String getSignature() {
+        return "pg_catalog.pg_attribute()";
     }
 }
