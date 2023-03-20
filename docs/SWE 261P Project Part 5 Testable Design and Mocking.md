@@ -12,18 +12,18 @@
 
 **Table of Contents**
 + [1. Testable Design](#1-testable-design)
-    + [1.1 Aspects to Make a Testable Design](#11-aspects-to-make-a-testable-design)
-    + [1.2 Goals to Make a Testable Design](#12-goals-to-make-a-testable-design)
+  + [1.1 Aspects to Make a Testable Design](#11-aspects-to-make-a-testable-design)
+  + [1.2 Goals to Make a Testable Design](#12-goals-to-make-a-testable-design)
 + [2. Mocking](#2-mocking)
-    + [2.1 Definition of Mocking](#21-definition-of-mocking)
-    + [2.2 The Utility of Mocking](#22-the-utility-of-mocking)
-    + [2.3 Mock Testing vs Traditional Unit Testing](#23-mock-testing-vs-traditional-unit-testing)
+  + [2.1 Definition of Mocking](#21-definition-of-mocking)
+  + [2.2 The Utility of Mocking](#22-the-utility-of-mocking)
+  + [2.3 Mock Testing vs Traditional Unit Testing](#23-mock-testing-vs-traditional-unit-testing)
 + [3. Documentation of Existing Code](#3-documentation-of-existing-code)
-    + [3.1 A Difficult-Testing Code Example](#31-a-difficult-testing-code-example)
-    + [3.2 Advice to Fix the Code and Implementation](#32-advice-to-fix-the-code-and-implementation)
+  + [3.1 A Difficult-Testing Code Example](#31-a-difficult-testing-code-example)
+  + [3.2 Advice to Fix the Code and Implementation](#32-advice-to-fix-the-code-and-implementation)
 + [4. New Test Cases](#4-new-test-cases)
-    + [4.1 Mocking](#41-mocking)
-    + [4.2 Testable Design](#42-testable-design)
+  + [4.1 Mocking](#41-mocking)
+  + [4.2 Testable Design](#42-testable-design)
 
 ----------
 <p style="page-break-after:always"></p>
@@ -33,9 +33,9 @@
 
 ## 1.1 Aspects to Make a Testable Design
 
-When it comes to designing a system or software, there are many aspects that can make it more testable. Some of these include creating modular and cohesive code, using consistent naming conventions, minimizing dependencies, etc. Additionally, designing with testability in mind from the start can make it easier to create and execute tests, as well as identify and fix issues more quickly. Overall, a testable design is one that is structured, organized, and designed to facilitate testing at every stage of the development process. 
+When it comes to designing a system or software, there are many aspects that can make it more testable. Some of these include creating modular and cohesive code, using consistent naming conventions, minimizing dependencies, etc. Additionally, designing with testability in mind from the start can make it easier to create and execute tests, as well as identify and fix issues more quickly. Overall, a testable design is one that is structured, organized, and designed to facilitate testing at every stage of the development process.
 
-The professor emphasized that creating a testable design is crucial for ensuring software quality and reliability. By avoiding certain coding practices, such as using **private complex methods**, **static methods**, **hardcoding in "new" statements**, **logic in constructors**, and **the singleton pattern**, developers can create more modular and testable code that is easier to maintain and improve over time. Other aspects that can help us achieve testable design are as follows. 
+The professor emphasized that creating a testable design is crucial for ensuring software quality and reliability. By avoiding certain coding practices, such as using **private complex methods**, **static methods**, **hardcoding in "new" statements**, **logic in constructors**, and **the singleton pattern**, developers can create more modular and testable code that is easier to maintain and improve over time. Other aspects that can help us achieve testable design are as follows.
 
 - **Modularity**: A testable design is often broken down into smaller modules or components. These modules are designed to be self-contained and have well-defined interfaces, which makes them easier to test in isolation.
 - **Separation of concerns**: A testable design separates different concerns or responsibilities into different modules or components. This ensures that each module is responsible for a specific task, which makes it easier to test and debug.
@@ -56,7 +56,7 @@ A testable design should be built with the goal of ensuring that the design meet
 
 ## 2.1 Definition of Mocking
 
-Software testing mocking is a technique that involves creating fake or simulated objects, functions, or services to replicate the behavior of the real components of a software application. These simulated components, called "mocks," are designed to emulate the behavior of the real components and allow software developers and testers to isolate and test specific parts of an application in isolation. Mock is useful for interaction testing, as opposed to state testing. 
+Software testing mocking is a technique that involves creating fake or simulated objects, functions, or services to replicate the behavior of the real components of a software application. These simulated components, called "mocks," are designed to emulate the behavior of the real components and allow software developers and testers to isolate and test specific parts of an application in isolation. Mock is useful for interaction testing, as opposed to state testing.
 
 ## 2.2 The Utility of Mocking
 
@@ -87,7 +87,7 @@ QuestDB is considered to be a well-designed and testable system due to several f
 
 1. **Avoid complex private methods**: complex logic in private methods can be a source for bugs that cannot be found by direct testing.
 2. **Avoid static methods**: static methods are methods that belong to a class rather than an instance of the class (i.e. object). They can make it difficult to isolate and test the behavior of a component.
-3. **Be careful hardcoding in “new”**: We need to allow the object reference to be created outside the method and passed in (dependency injection). 
+3. **Be careful hardcoding in “new”**: We need to allow the object reference to be created outside the method and passed in (dependency injection).
 4. **Avoid logic in constructors**: better to have a more simple constructor and have the functionality placed in another method.
 5. **Avoid singleton pattern**: there is appropriate use of this pattern, however, make sure that it is something that does not need to be swapped out for testing.
 
@@ -155,7 +155,7 @@ However, in the original implementation of class `IODispatcherLinux` of QuestDB 
 
 ## 3.2 Advice to Fix the Code and Implementation
 
-Since class `Epoll` and `IODispatcherLinux` are closely coupled, `Epoll` can not be mocked and the interaction between `IODispatcherLinux` and `Epoll` can not be directly tested. Therefore, we changed the codes into a testable design by allowing the `Epoll` object reference to be created outside the `IODispatcherLinux` method and passed in (i.e. dependency injection). 
+Since class `Epoll` and `IODispatcherLinux` are closely coupled, `Epoll` can not be mocked and the interaction between `IODispatcherLinux` and `Epoll` can not be directly tested. Therefore, we changed the codes into a testable design by allowing the `Epoll` object reference to be created outside the `IODispatcherLinux` method and passed in (i.e. dependency injection).
 
 We modified the code in the following steps:
 
@@ -275,7 +275,7 @@ To make the `Epoll` object work on a MacOS machine, we need to use a mock object
 
 We added 1 JUnit test cases in `io.questdb.network.MockedEpollTest` to test the functionality of `IODispatcherLinux` and `Epoll`. First, we initialized the `ioDispatcherLinux` object with the mocked `Epoll` and `ioContextFactory`. We then tested the `io.questdb.network.IODispatcherLinux#close` function to confirm that the `ioDispatcherLinux` can be closed properly, and `Epoll.closed()` is called as expected.
 
-By implementation of these tests, we increased the method coverage of `Epoll` and `IoDispatcherLinux` by 10% and 15% respectively, which was 0% previously. 
+By implementation of these tests, we increased the method coverage of `Epoll` and `IoDispatcherLinux` by 10% and 15% respectively, which was 0% previously.
 
 ```java
 public class MockedEpollTest {
