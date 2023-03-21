@@ -16,27 +16,29 @@
 + [Acknowledgement](#acknowledgement)
 + [Contribute a Fix](#contribute-a-fix)
   <br/><br/>
-+ [Part 1. Introduction/ Set Up/ Functional Testing and Partitioning of QuestDB](#part-1-introduction-set-up-functional-testing-and-partitioning-of-questdb)
++ [Part 1. Introduction and Setup](#part-1-introduction-and-set-up)
   + [1. QuestDB Overview](#1-questdb-overview)
     + [1.1 Brief Introduction of QuestDB](#11-brief-introduction-of-questdb)
     + [1.2 Important Concepts of QuestDB](#12-important-concepts-of-questdb)
   + [2. Build and run QuestDB via Maven](#2-build-and-run-questdb-via-maven)
-  + [3. Existing Test Cases](#3-existing-test-cases)
-      + [3.1 Functional Testing](#31-functional-testing)
-      + [3.2 Combinatorial Testing](#32-combinatorial-testing)
-      + [3.3 Quick way to run test cases](#33-quick-way-to-run-test-cases)
-  + [4. Functional Testing](#4-functional-testing)
-      + [4.1 Introduction of Functional Testing and Partition Testing](#41-introduction-of-functional-testing-and-partition-testing)
-      + [4.2 Implementation of Functional Testing and Partition Testing](#42-implementation-of-functional-testing-and-partition-testing)
-      + [4.3 Escape in INSERT statements](#43-escape-in-insert-statements)
-      + [4.4 Escape in SELECT statements](#44-escape-in-select-statements)
-        <br/><br/>
-+ [Part 2. Functional Testing and Finite State Machines of QuestDB](#part-2-functional-testing-and-finite-state-machines-of-questdb)
+    <br/><br/>
++ [Part 2. Functional Testing and Partitioning](#part-2-functional-testing-and-partitioning)
+  + [1. Existing Test Cases](#1-existing-test-cases)
+    + [1.1 Functional Testing](#11-functional-testing)
+    + [1.2 Combinatorial Testing](#12-combinatorial-testing)
+    + [1.3 Quick way to run test cases](#13-quick-way-to-run-test-cases)
+  + [2. Functional Testing](#2-functional-testing)
+    + [2.1 Introduction of Functional Testing and Partition Testing](#21-introduction-of-functional-testing-and-partition-testing)
+    + [2.2 Implementation of Functional Testing and Partition Testing](#22-implementation-of-functional-testing-and-partition-testing)
+    + [2.3 Escape in INSERT statements](#23-escape-in-insert-statements)
+    + [2.4 Escape in SELECT statements](#24-escape-in-select-statements)
+          <br/><br/>
++ [Part 3. Functional Testing and Finite State Machines](#part-3-functional-testing-and-finite-state-machines)
   + [1. Finite Models for Testing](#1-finite-models-for-testing)
   + [2. Implementations of Finite State Machine](#2-implementations-of-finite-state-machine)
   + [3. New JUnit Test Cases of Finite State Machine](#3-new-junit-test-cases-of-finite-state-machine)
     <br/><br/>
-+ [Part 3. White Box Testing and Coverage of QuestDB](#part-3-white-box-testing-and-coverage-of-questdb)
++ [Part 4. White Box Testing and Coverage](#part-4-white-box-testing-and-coverage)
   + [1. Structural Testing](#1-structural-testing)
   + [2. Coverage of the Existing Test Suite](#2-coverage-of-the-existing-test-suite)
     + [2.1 Coverage Metrics](#21-coverage-metrics)
@@ -48,7 +50,7 @@
     + [3.3 New JUnit test case3](#33-new-junit-test-case3)
   + [4. Conclusion](#4-conclusion)
     <br/><br/>
-+ [Part 4. Continuous Integration of QuestDB](#part-4-continuous-integration-of-questdb)
++ [Part 5. Continuous Integration](#part-5-continuous-integration)
   + [1. Continuous Integration Overview](#1-continuous-integration-overview)
       + [1.1 What is Continuous Integration (CI)?](#11-what-is-continuous-integration-ci)
       + [1.2 Why do Continuous Integration (CI)?](#12-why-do-continuous-integration-ci)
@@ -62,7 +64,7 @@
   + [4. Existing Github Action: Danger - Validate PR Title](#4-existing-github-action-danger---validate-pr-title)
   + [5. Existing Azure Pipelines](#5-existing-azure-pipelines)
     <br/><br/>
-+ [Part 5. Testable Design. Mocking of QuestDB](#part-5-testable-design-mocking-of-questdb)
++ [Part 6. Testable Design and Mocking](#part-6-testable-design-and-mocking)
   + [1. Testable Design](#1-testable-design)
       + [1.1 Aspects to Make a Testable Design](#11-aspects-to-make-a-testable-design)
       + [1.2 Goals to Make a Testable Design](#12-goals-to-make-a-testable-design)
@@ -77,7 +79,7 @@
       + [4.1 Mocking](#41-mocking)
       + [4.2 Testable Design](#42-testable-design)
         <br/><br/>
-+ [Part 6. Static Analyzers of QuestDB](#part-6-static-analyzers-of-questdb)
++ [Part 7. Static Analyzers](#part-7-static-analyzers)
   + [1. Static Analyzers](#1-static-analyzers)
   + [2. Implementation of SpotBugs](#2-implementation-of-spotBugs)
       + [2.1 Introduction of SpotBugs](#21-introduction-of-spotBugs)
@@ -129,26 +131,19 @@ The pull request has been approved and merged. Our codes are [part of their main
 <div style="page-break-after: always;"></div>
 
 
-# Part 1. Introduction/ Set Up/ Functional Testing and Partitioning of QuestDB
+# Part 1. Introduction and Set Up
 
 **Table of Contents**
 + [1. QuestDB Overview](#1-questdb-overview)
     + [1.1 Brief Introduction of QuestDB](#11-brief-introduction-of-questdb)
     + [1.2 Important Concepts of QuestDB](#12-important-concepts-of-questdb)
 + [2. Build and run QuestDB via Maven](#2-build-and-run-questdb-via-maven)
-+ [3. Existing Test Cases](#3-existing-test-cases)
-    + [3.1 Functional Testing](#31-functional-testing)
-    + [3.2 Combinatorial Testing](#32-combinatorial-testing)
-    + [3.3 Quick way to run test cases](#32-quick-way-to-run-test-cases)
-+ [4. Functional Testing](#4-functional-testing)
-    + [4.1 Introduction of Functional Testing and Partition Testing](#41-introduction-of-functional-testing-and-partition-testing)
-    + [4.2 Implementation of Functional Testing and Partition Testing](#42-implementation-of-functional-testing-and-partition-testing)
-    + [4.3 Escape in INSERT statements](#43-escape-in-insert-statements)
-    + [4.4 Escape in SELECT statements](#44-escape-in-select-statements)
+
 
 
 
 ---
+
 
 # 1. QuestDB Overview
 
@@ -297,14 +292,28 @@ mkdir db_root_dir
 java -jar core/target/questdb-6.7.1-SNAPSHOT.jar -d db_root_dir/
 # after the above command, it will print the ip address with the port, through which you can access the web console
 ```
+<div style="page-break-after: always;"></div>
 
-# 3. Existing Test Cases
+# Part 2. Functional Testing and Partitioning
++ [1. Existing Test Cases](#1-existing-test-cases)
+  + [1.1 Functional Testing](#11-functional-testing)
+  + [1.2 Combinatorial Testing](#12-combinatorial-testing)
+  + [1.3 Quick way to run test cases](#13-quick-way-to-run-test-cases)
++ [2. Functional Testing](#2-functional-testing)
+  + [2.1 Introduction of Functional Testing and Partition Testing](#21-introduction-of-functional-testing-and-partition-testing)
+  + [2.2 Implementation of Functional Testing and Partition Testing](#22-implementation-of-functional-testing-and-partition-testing)
+  + [2.3 Escape in INSERT statements](#23-escape-in-insert-statements)
+  + [2.4 Escape in SELECT statements](#24-escape-in-select-statements)
+
+---
+
+# 1. Existing Test Cases
 
 QuestDB uses **Junit** to implement unit testing in Java, which is a Regression Testing Framework that can be easily integrated with Maven.
 
 Existing test cases locate in `src/test/java/io/questdb`. The system has been tested very comprehensively, and there is a one-to-one correspondence between the tested files and the java source code files. The tests have covered almost every class and class method in the system, so the Code Coverage is almost 100% (Number of lines of code executed)/(Total Number of lines of code in a system component). As we learned in class, different types of tests can be found in existing test cases.
 
-## 3.1 **Functional Testing**
+## 1.1 **Functional Testing**
 
 Test function by providing appropriate input, and verifying if the output is against the Functional requirements.
 
@@ -332,7 +341,7 @@ example: `src/test/java/io/questdb/griffin/AddIndexTest.java`
     }
 ```
 
-## 3.2 **Combinatorial Testing**
+## 1.2 **Combinatorial Testing**
 
 ### Input Parameter Testing
 
@@ -391,7 +400,7 @@ private static final String LOCALHOST = "localhost";
     }
 ```
 
-## 3.3 **Quick way to run test cases**
+## 1.3 **Quick way to run test cases**
 
 To run tests, it is not required to have the binaries nor the web console built. There are over 4000 tests that should complete within 2-6 minutes depending on your system:
 
@@ -425,15 +434,15 @@ All the other failures are **Unexpected Exceptions.**
 </p>
 
 
-# 4. Functional Testing
+# 2. Functional Testing
 
-## 4.1 Introduction of Functional Testing and Partition Testing
+## 2.1 Introduction of Functional Testing and Partition Testing
 
 **[(Systematic) Functional Testing](https://www.geeksforgeeks.org/software-testing-functional-testing/)** is a type of software testing ****in which the system is tested against the functional requirements and specifications. It is basically defined as a type of testing which verifies that each function of the software application works in conformance with the requirement and specification. This testing is not concerned about the source code of the application, and is also known as **[black-box testing](https://www.geeksforgeeks.org/software-engineering-black-box-testing/)**. Each functionality of the software application is tested by providing appropriate test input, expecting the output and comparing the actual output with the expected output. The systematic refers to choose valuable representatives of classes that are apt to fail often or not at all.
 
 **[Equivalence Partition Method](https://www.geeksforgeeks.org/equivalence-partitioning-method/)** is a software testing technique or black-box testing that divides input domain into classes of data, and with the help of these classes of data, test cases can be derived. An ideal test case identifies class of error that might require many arbitrary test cases to be executed before general error is observed.
 
-## 4.2 Implementation of Functional Testing and Partition Testing
+## 2.2 Implementation of Functional Testing and Partition Testing
 
 ### Steps
 
@@ -469,7 +478,7 @@ For each statement, we can decompose it into smaller partitions:
 
 Second, we select representations and form test specifications. We select INSERT and SELECT statement and respectively test escape in STRING and LIKE/ ILIKE operator.
 
-## 4.3 Escape in INSERT statements
+## 2.3 Escape in INSERT statements
 
 ### **INSERT**
 
@@ -516,7 +525,7 @@ In `io.questdb.griffin.InsertTest#testInsertEscapeString`
 
 The result shows that QuestDB handle escape in insert statements successfully.
 
-## 4.4 Escape in SELECT statements
+## 2.4 Escape in SELECT statements
 
 ### **SELECT**
 
@@ -629,7 +638,7 @@ With the modified source code, we pass all the tests that the original official 
 <div style="page-break-after: always;"></div>
 
 
-# Part 2. Functional Testing and Finite State Machines of QuestDB
+# Part 3. Functional Testing and Finite State Machines
 
 **Table of Contents**
 + [1. Finite Models for Testing](#1-finite-models-for-testing)
@@ -854,7 +863,7 @@ public void testQuestDBStateMachineAtNonEmptyTableStateTruncate() throws Excepti
 <div style="page-break-after: always;"></div>
 
 
-# Part 3. White Box Testing and Coverage of QuestDB
+# Part 4. White Box Testing and Coverage
 
 **Table of Contents**
 + [1. Structural Testing](#1-structural-testing)
@@ -1132,7 +1141,7 @@ After adding three new JUnit test cases, we conducted white-box testing with JaC
 <div style="page-break-after: always;"></div>
 
 
-# Part 4. Continuous Integration of QuestDB
+# Part 5. Continuous Integration
 
 **Table of Contents**
 + [1. Continuous Integration Overview](#1-continuous-integration-overview)
@@ -1342,7 +1351,7 @@ But as we created a new pull request to their official repository to contribute 
 <div style="page-break-after: always;"></div>
 
 
-# Part 5. Testable Design. Mocking of QuestDB
+# Part 6. Testable Design and Mocking
 
 
 **Table of Contents**
@@ -1640,7 +1649,7 @@ public class MockedEpollTest {
 <div style="page-break-after: always;"></div>
 
 
-# Part 6. Static Analyzers of QuestDB
+# Part 7. Static Analyzers
 
 **Table of Contents**
 + [1. Static Analyzers](#1-static-analyzers)
