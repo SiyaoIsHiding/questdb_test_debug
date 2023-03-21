@@ -172,7 +172,10 @@ The pull request has been approved and merged. Our codes are [part of their main
     - QuestDB uses a **column-based** storage model. Data is stored in tables with each column stored in its own file and its own native format. New data is appended to the bottom of each column to allow data to be organically retrieved in the same order that it was ingested.
     - The QuestDB storage model uses memory mapped files and cross-process atomic transaction updates as a low overhead method of inter-process communication. Data committed by one process can be instantaneously read by another process, either randomly (via queries) or incrementally (as a data queue). QuestDB provides a variety of reader implementations.
 
-![](https://i.imgur.com/0S5bdiI.png)
+<p align="center">
+   <img src="https://i.imgur.com/0S5bdiI.png"  width="600" align="center">
+</p>
+  
 
 
 - **[Designated timestamp](https://questdb.io/docs/concept/designated-timestamp/)**
@@ -413,7 +416,9 @@ Tests run: 11964, **Failures: 11**, Errors: 22, Skipped: 311
 
 All the other failures are **Unexpected Exceptions.**
 
-![](https://i.imgur.com/RdoYgjT.png)
+<p align="center">
+   <img src="https://i.imgur.com/RdoYgjT.png"  width="700" align="center">
+</p>
 
 
 # 4. Functional Testing
@@ -437,7 +442,9 @@ All the other failures are **Unexpected Exceptions.**
     - Combination of input values or model behaviors
 4. Produce and execute actual tests
 
-![](https://i.imgur.com/yQvX6nx.png)
+<p align="center">
+   <img src="https://i.imgur.com/yQvX6nx.png"  width="300" align="center">
+</p>
 
 
 ### Strategy
@@ -648,8 +655,9 @@ Transitions between these two states are executed through two primary actions, r
 3. Once in the `Non-empty Table` state, we have the ability to `Update data` within the table. This can be achieved by executing an UPDATE statement in SQL. Importantly, performing this action does not result in a transition of the database state, as the contents of the table have changed, but the overall state of the table remains `Non-empty Table`.
 4. When we wish to clear the contents of the table, we can `Truncate table` by executing a TRUNCATE TABLE statement in SQL. This causes all data within the table to be removed, effectively making the table empty once again. Upon successful execution of the TRUNCATE TABLE statement, the database transitions back to the `Empty Table` state.
 
-![](https://i.imgur.com/H7qBEV1.png)
-
+<p align="center">
+   <img src="https://i.imgur.com/H7qBEV1.png"  width="500" align="center">
+</p>
 
 ## 3. New JUnit Test Cases of Finite State Machine <a name="third"></a>
 
