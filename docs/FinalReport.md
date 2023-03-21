@@ -5,10 +5,98 @@
 <p>&nbsp;</p>
 
 # SWE 261P Project: Testing and Debugging of QuestDB
+### **Team Member: Jane He, Fengnan Sun, Ming-Hua Tsai**
+### **GitHub username: [SiyaoIsHiding](https://github.com/SiyaoIsHiding), [SoniaSun810](https://github.com/SoniaSun810), [alimhtsai](https://github.com/alimhtsai)**
+
+## Table of Contents
++ [Acknowledgement](#acknowledgement)
++ [Contribute a Fix](#contribute-a-fix)
+  <br/><br/>
++ [Part 1 Introduction/ Set Up/ Functional Testing and Partitioning of QuestDB](#part-1-introduction-set-up-functional-testing-and-partitioning-of-questdb)
+  + [1. QuestDB Overview](#1-questdb-overview)
+    + [1.1 Brief Introduction of QuestDB](#11-brief-introduction-of-questdb)
+    + [1.2 Important Concepts of QuestDB](#12-important-concepts-of-questdb)
+  + [2. Build and run QuestDB via Maven](#2-build-and-run-questdb-via-maven)
+  + [3. Existing Test Cases](#3-existing-test-cases)
+      + [3.1 Functional Testing](#31-functional-testing)
+      + [3.2 Combinatorial Testing](#32-combinatorial-testing)
+      + [3.3 Quick way to run test cases](#32-quick-way-to-run-test-cases)
+  + [4. Functional Testing](#4-functional-testing)
+      + [4.1 Introduction of Functional Testing and Partition Testing](#41-introduction-of-functional-testing-and-partition-testing)
+      + [4.2 Implementation of Functional Testing and Partition Testing](#42-implementation-of-functional-testing-and-partition-testing)
+      + [4.3 Escape in INSERT statements](#43-escape-in-insert-statements)
+      + [4.4 Escape in SELECT statements](#44-escape-in-select-statements)
+        <br/><br/>
++ [Part 2: Functional Testing and Finite State Machines of QuestDB](#part-2-functional-testing-and-finite-state-machines-of-questdb)
+  + [1. Finite Models for Testing](#1-finite-models-for-testing-a-namefirsta)
+  + [2. Implementations of Finite State Machine](#2-implementations-of-finite-state-machine-a-nameseconda)
+  + [3. New JUnit Test Cases of Finite State Machine](#3-new-junit-test-cases-of-finite-state-machine-a-namethirda)
+    <br/><br/>
++ [Part 3. White Box Testing and Coverage of QuestDB](#part-3-white-box-testing-and-coverage-of-questdb)
+  + [1. Structural Testing](#1-structural-testing-a-namefirsta)
+  + [2. Coverage of the Existing Test Suite](#2-coverage-of-the-existing-test-suite-a-nameseconda)
+      + [2.1 Coverage Metrics](#21-coverage-metrics)
+      + [2.2 Coverage Results](#22-coverage-results)
+      + [2.3 Uncovered Test Cases](#23-uncovered-test-cases)
+  + [3. New JUnit Test Cases of Structural Testing](#3-new-junit-test-cases-of-finite-state-machine-a-namethirda)
+      + [3.1 New JUnit test case1](#31-new-junit-test-case1)
+      + [3.2 New JUnit test case2](#32-new-junit-test-case2)
+      + [3.3 New JUnit test case3](#33-new-junit-test-case3)
+  + [4. Conclusion](#4-conclusion-a-namefourtha)
+    <br/><br/>
++ [Part 4: Continuous Integration of QuestDB](#part-4-continuous-integration-of-questdb)
+  + [1. Continuous Integration Overview](#1-continuous-integration-overview)
+      + [1.1 What is Continuous Integration (CI)?](#11-what-is-continuous-integration-ci)
+      + [1.2 Why do Continuous Integration (CI)?](#12-why-do-continuous-integration-ci)
+      + [1.3 Common practices of Continuous Integration (CI)](#13-common-practices-of-continuous-integration-ci)
+  + [2. Our Github Action 1: Maven Build and Test](#2-our-github-action-1-maven-build-and-test)
+      + [2.1 Configuration](#21-configuration)
+      + [2.2 Outcome](#22-outcome)
+  + [3. Our Github Action 2: Markdown To PDF](#3-our-github-action-2-markdown-to-pdf)
+      + [3.1 Configuration](#31-configuration)
+      + [3.2 Outcome](#32-outcome)
+  + [4. Existing Github Action: Danger - Validate PR Title](#4-existing-github-action-danger---validate-pr-title)
+  + [5. Existing Azure Pipelines](#5-existing-azure-pipelines)
+    <br/><br/>
++ [Part 5. Testable Design. Mocking of QuestDB](#part-5-testable-design-mocking-of-questdb)
+  + [1. Testable Design](#1-testable-design)
+      + [1.1 Aspects to Make a Testable Design](#11-aspects-to-make-a-testable-design)
+      + [1.2 Goals to Make a Testable Design](#12-goals-to-make-a-testable-design)
+  + [2. Mocking](#2-mocking)
+      + [2.1 Definition of Mocking](#21-definition-of-mocking)
+      + [2.2 The Utility of Mocking](#22-the-utility-of-mocking)
+      + [2.3 Mock Testing vs Traditional Unit Testing](#23-mock-testing-vs-traditional-unit-testing)
+  + [3. Documentation of Existing Code](#3-documentation-of-existing-code)
+      + [3.1 A Difficult-Testing Code Example](#31-a-difficult-testing-code-example)
+      + [3.2 Advice to Fix the Code and Implementation](#32-advice-to-fix-the-code-and-implementation)
+  + [4. New Test Cases](#4-new-test-cases)
+      + [4.1 Mocking](#41-mocking)
+      + [4.2 Testable Design](#42-testable-design)
+        <br/><br/>
++ [Part 6: Static Analyzers of QuestDB](#part-6-static-analyzers-of-questdb)
+  + [1. Static Analyzers](#1-static-analyzers)
+  + [2. Implementation of SpotBugs](#2-implementation-of-spotBugs)
+      + [2.1 Introduction of SpotBugs](#21-introduction-of-spotBugs)
+      + [2.2 The result of SpotBugs](#22-the-result-of-spotBugs)
+  + [3. Implementation of Checkstyle](#3-implementation-of-checkstyle)
+      + [3.1 Introduction of Checkstyle](#31-introduction-of-checkstyle)
+      + [3.2 The result of Checkstyle](#32-the-result-of-checkstyle)
+  + [4. Comparison of SpotBugs and CheckStyle](#4-comparison-of-spotBugs-and-checkStyle)
+      + [4.1 Same Warning on Hidden Field `txn`](#41-same-warning-on-hidden-field-`txn`)
+      + [4.2 Distinct Warnings](#42-distinct-warnings)
+
+<div style="page-break-after: always;"></div>
+
 
 ## Acknowledgement
+The lectures were well-structured and provided us with a comprehensive understanding of various testing and debugging techniques.
+The group project was also an excellent opportunity for us to apply the concepts we learned in a real-world scenario.
 
+We would like to thank Professor James for sharing his knowledge and expertise with us.
+The TAs were also very supportive, always available to answer our questions and provide feedback on our work.
 
+Overall, this course has been a valuable learning experience,
+and we are grateful for the opportunity to have taken it.
 
 <div style="page-break-after: always;"></div>
 
@@ -36,91 +124,8 @@ The pull request has been approved and merged. Our codes are [part of their main
 
 <div style="page-break-after: always;"></div>
 
-## Table of Contents
-+ [Part 1 Introduction/ Set Up/ Functional Testing and Partitioning of QuestDB](#swe-261p-project-part-1-introduction-set-up-functional-testing-and-partitioning-of-questdb)
-  + [1. QuestDB Overview](#1-questdb-overview)
-    + [1.1 Brief Introduction of QuestDB](#11-brief-introduction-of-questdb)
-    + [1.2 Important Concepts of QuestDB](#12-important-concepts-of-questdb)
-  + [2. Build and run QuestDB via Maven](#2-build-and-run-questdb-via-maven)
-  + [3. Existing Test Cases](#3-existing-test-cases)
-      + [3.1 Functional Testing](#31-functional-testing)
-      + [3.2 Combinatorial Testing](#32-combinatorial-testing)
-      + [3.3 Quick way to run test cases](#32-quick-way-to-run-test-cases)
-  + [4. Functional Testing](#4-functional-testing)
-      + [4.1 Introduction of Functional Testing and Partition Testing](#41-introduction-of-functional-testing-and-partition-testing)
-      + [4.2 Implementation of Functional Testing and Partition Testing](#42-implementation-of-functional-testing-and-partition-testing)
-      + [4.3 Escape in INSERT statements](#43-escape-in-insert-statements)
-      + [4.4 Escape in SELECT statements](#44-escape-in-select-statements)
-        <br/><br/>
-+ [Part 2: Functional Testing and Finite State Machines of QuestDB](#swe-261p-project-part-2-functional-testing-and-finite-state-machines-of-questdb)
-  + [1. Finite Models for Testing](#1-finite-models-for-testing-a-namefirsta)
-  + [2. Implementations of Finite State Machine](#2-implementations-of-finite-state-machine-a-nameseconda)
-  + [3. New JUnit Test Cases of Finite State Machine](#3-new-junit-test-cases-of-finite-state-machine-a-namethirda)
-    <br/><br/>
-+ [Part 3. White Box Testing and Coverage of QuestDB](#swe-261p-project-part-3-white-box-testing-and-coverage-of-questdb)
-  + [1. Structural Testing](#1-structural-testing-a-namefirsta)
-  + [2. Coverage of the Existing Test Suite](#2-coverage-of-the-existing-test-suite-a-nameseconda)
-      + [2.1 Coverage Metrics](#21-coverage-metrics)
-      + [2.2 Coverage Results](#22-coverage-results)
-      + [2.3 Uncovered Test Cases](#23-uncovered-test-cases)
-  + [3. New JUnit Test Cases of Structural Testing](#3-new-junit-test-cases-of-finite-state-machine-a-namethirda)
-      + [3.1 New JUnit test case1](#31-new-junit-test-case1)
-      + [3.2 New JUnit test case2](#32-new-junit-test-case2)
-      + [3.3 New JUnit test case3](#33-new-junit-test-case3)
-  + [4. Conclusion](#4-conclusion-a-namefourtha)
-    <br/><br/>
-+ [Part 4: Continuous Integration of QuestDB](#swe-261p-project-part-4-continuous-integration-of-questdb)
-  + [1. Continuous Integration Overview](#1-continuous-integration-overview)
-      + [1.1 What is Continuous Integration (CI)?](#11-what-is-continuous-integration-ci)
-      + [1.2 Why do Continuous Integration (CI)?](#12-why-do-continuous-integration-ci)
-      + [1.3 Common practices of Continuous Integration (CI)](#13-common-practices-of-continuous-integration-ci)
-  + [2. Our Github Action 1: Maven Build and Test](#2-our-github-action-1-maven-build-and-test)
-      + [2.1 Configuration](#21-configuration)
-      + [2.2 Outcome](#22-outcome)
-  + [3. Our Github Action 2: Markdown To PDF](#3-our-github-action-2-markdown-to-pdf)
-      + [3.1 Configuration](#31-configuration)
-      + [3.2 Outcome](#32-outcome)
-  + [4. Existing Github Action: Danger - Validate PR Title](#4-existing-github-action-danger---validate-pr-title)
-  + [5. Existing Azure Pipelines](#5-existing-azure-pipelines)
-    <br/><br/>
-+ [Part 5. Testable Design. Mocking of QuestDB](#swe-261p-project-part-5-testable-design-mocking-of-questdb)
-  + [1. Testable Design](#1-testable-design)
-      + [1.1 Aspects to Make a Testable Design](#11-aspects-to-make-a-testable-design)
-      + [1.2 Goals to Make a Testable Design](#12-goals-to-make-a-testable-design)
-  + [2. Mocking](#2-mocking)
-      + [2.1 Definition of Mocking](#21-definition-of-mocking)
-      + [2.2 The Utility of Mocking](#22-the-utility-of-mocking)
-      + [2.3 Mock Testing vs Traditional Unit Testing](#23-mock-testing-vs-traditional-unit-testing)
-  + [3. Documentation of Existing Code](#3-documentation-of-existing-code)
-      + [3.1 A Difficult-Testing Code Example](#31-a-difficult-testing-code-example)
-      + [3.2 Advice to Fix the Code and Implementation](#32-advice-to-fix-the-code-and-implementation)
-  + [4. New Test Cases](#4-new-test-cases)
-      + [4.1 Mocking](#41-mocking)
-      + [4.2 Testable Design](#42-testable-design)
-        <br/><br/>
-+ [Part 6: Static Analyzers of QuestDB](#swe-261p-project-part-6-static-analyzers-of-questdb)
-  + [1. Static Analyzers](#1-static-analyzers)
-  + [2. Implementation of SpotBugs](#2-implementation-of-spotBugs)
-      + [2.1 Introduction of SpotBugs](#21-introduction-of-spotBugs)
-      + [2.2 The result of SpotBugs](#22-the-result-of-spotBugs)
-  + [3. Implementation of Checkstyle](#3-implementation-of-checkstyle)
-      + [3.1 Introduction of Checkstyle](#31-introduction-of-checkstyle)
-      + [3.2 The result of Checkstyle](#32-the-result-of-checkstyle)
-  + [4. Comparison of SpotBugs and CheckStyle](#4-comparison-of-spotBugs-and-checkStyle)
-      + [4.1 Same Warning on Hidden Field `txn`](#41-same-warning-on-hidden-field-`txn`)
-      + [4.2 Distinct Warnings](#42-distinct-warnings)
 
-<div style="page-break-after: always;"></div>
-
-<div align="center">
-  <a href="https://questdb.io/" target="blank"><img alt="QuestDB Logo" src="https://questdb.io/img/questdb-logo-themed.svg" width="305px"/></a>
-</div>
-<p>&nbsp;</p>
-
-
-# SWE 261P Project Part 1: Introduction/ Set Up/ Functional Testing and Partitioning of QuestDB
-
-**Team Member: Jane He, Fengnan Sun, Ming-Hua Tsai**
+# Part 1: Introduction/ Set Up/ Functional Testing and Partitioning of QuestDB
 
 **Table of Contents**
 + [1. QuestDB Overview](#1-questdb-overview)
@@ -613,16 +618,7 @@ With the modified source code, we pass all the tests that the original official 
 <div style="page-break-after: always;"></div>
 
 
-<div align="center">
-  <a href="https://questdb.io/" target="blank"><img alt="QuestDB Logo" src="https://questdb.io/img/questdb-logo-themed.svg" width="305px"/></a>
-</div>
-<p>&nbsp;</p>
-
-# SWE 261P Project Part 2: Functional Testing and Finite State Machines of QuestDB
-
-**Team Member: Jane He, Fengnan Sun, Ming-Hua Tsai**
-
-**GitHub username: [SiyaoIsHiding](https://github.com/SiyaoIsHiding), [SoniaSun810](https://github.com/SoniaSun810), [alimhtsai](https://github.com/alimhtsai)**
+# Part 2: Functional Testing and Finite State Machines of QuestDB
 
 **Table of Contents**
 + [1. Finite Models for Testing](#1-finite-models-for-testing-a-namefirsta)
@@ -846,16 +842,7 @@ public void testQuestDBStateMachineAtNonEmptyTableStateTruncate() throws Excepti
 <div style="page-break-after: always;"></div>
 
 
-<div align="center">
-  <a href="https://questdb.io/" target="blank"><img alt="QuestDB Logo" src="https://questdb.io/img/questdb-logo-themed.svg" width="305px"/></a>
-</div>
-<p>&nbsp;</p>
-
-# SWE 261P Project Part 3. White Box Testing and Coverage of QuestDB
-
-**Team Member: Jane He, Fengnan Sun, Ming-Hua Tsai**
-
-**GitHub username: [SiyaoIsHiding](https://github.com/SiyaoIsHiding), [SoniaSun810](https://github.com/SoniaSun810), [alimhtsai](https://github.com/alimhtsai)**
+# Part 3. White Box Testing and Coverage of QuestDB
 
 **Table of Contents**
 + [1. Structural Testing](#1-structural-testing-a-namefirsta)
@@ -1133,18 +1120,7 @@ After adding three new JUnit test cases, we conducted white-box testing with JaC
 <div style="page-break-after: always;"></div>
 
 
-
-
-<div align="center">
-  <a href="https://questdb.io/" target="blank"><img alt="QuestDB Logo" src="https://questdb.io/img/questdb-logo-themed.svg" width="305px"/></a>
-</div>
-<p>&nbsp;</p>
-
-# SWE 261P Project Part 4: Continuous Integration of QuestDB
-
-**Team Member: Jane He, Fengnan Sun, Ming-Hua Tsai**
-
-**GitHub username: [SiyaoIsHiding](https://github.com/SiyaoIsHiding), [SoniaSun810](https://github.com/SoniaSun810), [alimhtsai](https://github.com/alimhtsai)**
+# Part 4: Continuous Integration of QuestDB
 
 **Table of Contents**
 + [1. Continuous Integration Overview](#1-continuous-integration-overview)
@@ -1241,6 +1217,7 @@ Besides, it takes 27 minutes in total to run. It is usually considered too long 
 When we were doing project part 2, we already added a Github Action (the [source codes](https://github.com/BaileyJM02/markdown-to-pdf)) to convert our report written in markdown to pdf automatically on each push to master.
 
 ### 3.1 Configuration
+
 
 We added the GitHub Action configuration file `.github/workflows/convert-to-pdf.yml` with the content below:
 
@@ -1353,16 +1330,7 @@ But as we created a new pull request to their official repository to contribute 
 <div style="page-break-after: always;"></div>
 
 
-<div align="center">
-  <a href="https://questdb.io/" target="blank"><img alt="QuestDB Logo" src="https://questdb.io/img/questdb-logo-themed.svg" width="305px"/></a>
-</div>
-<p>&nbsp;</p>
-
-# SWE 261P Project Part 5. Testable Design. Mocking of QuestDB
-
-**Team Member: Jane He, Fengnan Sun, Ming-Hua Tsai**
-
-**GitHub username: [SiyaoIsHiding](https://github.com/SiyaoIsHiding), [SoniaSun810](https://github.com/SoniaSun810), [alimhtsai](https://github.com/alimhtsai)**
+# Part 5. Testable Design. Mocking of QuestDB
 
 
 **Table of Contents**
@@ -1659,16 +1627,8 @@ public class MockedEpollTest {
 
 <div style="page-break-after: always;"></div>
 
-<div align="center">
-  <a href="https://questdb.io/" target="blank"><img alt="QuestDB Logo" src="https://questdb.io/img/questdb-logo-themed.svg" width="305px"/></a>
-</div>
-<p>&nbsp;</p>
 
-# SWE 261P Project Part 6: Static Analyzers of QuestDB
-
-**Team Member: Jane He, Fengnan Sun, Ming-Hua Tsai**
-
-**GitHub username: [SiyaoIsHiding](https://github.com/SiyaoIsHiding), [SoniaSun810](https://github.com/SoniaSun810), [alimhtsai](https://github.com/alimhtsai)**
+# Part 6: Static Analyzers of QuestDB
 
 **Table of Contents**
 + [1. Static Analyzers](#1-static-analyzers)
