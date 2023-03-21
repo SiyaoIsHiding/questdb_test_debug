@@ -1,12 +1,16 @@
 
 <div align="center">
-  <a href="https://questdb.io/" target="blank"><img alt="QuestDB Logo" src="https://questdb.io/img/questdb-logo-themed.svg" width="305px"/></a>
+  <a href="https://questdb.io/" target="blank"><img alt="QuestDB Logo" src="https://questdb.io/img/questdb-logo-themed.svg" width="600px"/></a>
 </div>
 <p>&nbsp;</p>
+<br/><br/>
+<br/><br/>
 
 # SWE 261P Project: Testing and Debugging of QuestDB
 ### **Team Member: Jane He, Fengnan Sun, Ming-Hua Tsai**
 ### **GitHub username: [SiyaoIsHiding](https://github.com/SiyaoIsHiding), [SoniaSun810](https://github.com/SoniaSun810), [alimhtsai](https://github.com/alimhtsai)**
+
+<div style="page-break-after: always;"></div>
 
 ## Table of Contents
 + [Acknowledgement](#acknowledgement)
@@ -28,21 +32,21 @@
       + [4.4 Escape in SELECT statements](#44-escape-in-select-statements)
         <br/><br/>
 + [Part 2. Functional Testing and Finite State Machines of QuestDB](#part-2-functional-testing-and-finite-state-machines-of-questdb)
-  + [1. Finite Models for Testing](#1-finite-models-for-testing-a-namefirsta)
-  + [2. Implementations of Finite State Machine](#2-implementations-of-finite-state-machine-a-nameseconda)
-  + [3. New JUnit Test Cases of Finite State Machine](#3-new-junit-test-cases-of-finite-state-machine-a-namethirda)
+  + [1. Finite Models for Testing](#1-finite-models-for-testing)
+  + [2. Implementations of Finite State Machine](#2-implementations-of-finite-state-machine)
+  + [3. New JUnit Test Cases of Finite State Machine](#3-new-junit-test-cases-of-finite-state-machine)
     <br/><br/>
 + [Part 3. White Box Testing and Coverage of QuestDB](#part-3-white-box-testing-and-coverage-of-questdb)
-  + [1. Structural Testing](#1-structural-testing-a-namefirsta)
-  + [2. Coverage of the Existing Test Suite](#2-coverage-of-the-existing-test-suite-a-nameseconda)
-      + [2.1 Coverage Metrics](#21-coverage-metrics)
-      + [2.2 Coverage Results](#22-coverage-results)
-      + [2.3 Uncovered Test Cases](#23-uncovered-test-cases)
-  + [3. New JUnit Test Cases of Structural Testing](#3-new-junit-test-cases-of-finite-state-machine-a-namethirda)
-      + [3.1 New JUnit test case1](#31-new-junit-test-case1)
-      + [3.2 New JUnit test case2](#32-new-junit-test-case2)
-      + [3.3 New JUnit test case3](#33-new-junit-test-case3)
-  + [4. Conclusion](#4-conclusion-a-namefourtha)
+  + [1. Structural Testing](#1-structural-testing)
+  + [2. Coverage of the Existing Test Suite](#2-coverage-of-the-existing-test-suite)
+    + [2.1 Coverage Metrics](#21-coverage-metrics)
+    + [2.2 Coverage Results](#22-coverage-results)
+    + [2.3 Uncovered Test Cases](#23-uncovered-test-cases)
+  + [3. New JUnit Test Cases of Structural Testing](#3-new-junit-test-cases-of-structural-testing)
+    + [3.1 New JUnit test case1](#31-new-junit-test-case1)
+    + [3.2 New JUnit test case2](#32-new-junit-test-case2)
+    + [3.3 New JUnit test case3](#33-new-junit-test-case3)
+  + [4. Conclusion](#4-conclusion)
     <br/><br/>
 + [Part 4. Continuous Integration of QuestDB](#part-4-continuous-integration-of-questdb)
   + [1. Continuous Integration Overview](#1-continuous-integration-overview)
