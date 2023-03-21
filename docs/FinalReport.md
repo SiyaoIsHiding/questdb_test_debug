@@ -12,7 +12,7 @@
 + [Acknowledgement](#acknowledgement)
 + [Contribute a Fix](#contribute-a-fix)
   <br/><br/>
-+ [Part 1 Introduction/ Set Up/ Functional Testing and Partitioning of QuestDB](#part-1-introduction-set-up-functional-testing-and-partitioning-of-questdb)
++ [Part 1. Introduction/ Set Up/ Functional Testing and Partitioning of QuestDB](#part-1-introduction-set-up-functional-testing-and-partitioning-of-questdb)
   + [1. QuestDB Overview](#1-questdb-overview)
     + [1.1 Brief Introduction of QuestDB](#11-brief-introduction-of-questdb)
     + [1.2 Important Concepts of QuestDB](#12-important-concepts-of-questdb)
@@ -20,14 +20,14 @@
   + [3. Existing Test Cases](#3-existing-test-cases)
       + [3.1 Functional Testing](#31-functional-testing)
       + [3.2 Combinatorial Testing](#32-combinatorial-testing)
-      + [3.3 Quick way to run test cases](#32-quick-way-to-run-test-cases)
+      + [3.3 Quick way to run test cases](#33-quick-way-to-run-test-cases)
   + [4. Functional Testing](#4-functional-testing)
       + [4.1 Introduction of Functional Testing and Partition Testing](#41-introduction-of-functional-testing-and-partition-testing)
       + [4.2 Implementation of Functional Testing and Partition Testing](#42-implementation-of-functional-testing-and-partition-testing)
       + [4.3 Escape in INSERT statements](#43-escape-in-insert-statements)
       + [4.4 Escape in SELECT statements](#44-escape-in-select-statements)
         <br/><br/>
-+ [Part 2: Functional Testing and Finite State Machines of QuestDB](#part-2-functional-testing-and-finite-state-machines-of-questdb)
++ [Part 2. Functional Testing and Finite State Machines of QuestDB](#part-2-functional-testing-and-finite-state-machines-of-questdb)
   + [1. Finite Models for Testing](#1-finite-models-for-testing-a-namefirsta)
   + [2. Implementations of Finite State Machine](#2-implementations-of-finite-state-machine-a-nameseconda)
   + [3. New JUnit Test Cases of Finite State Machine](#3-new-junit-test-cases-of-finite-state-machine-a-namethirda)
@@ -44,7 +44,7 @@
       + [3.3 New JUnit test case3](#33-new-junit-test-case3)
   + [4. Conclusion](#4-conclusion-a-namefourtha)
     <br/><br/>
-+ [Part 4: Continuous Integration of QuestDB](#part-4-continuous-integration-of-questdb)
++ [Part 4. Continuous Integration of QuestDB](#part-4-continuous-integration-of-questdb)
   + [1. Continuous Integration Overview](#1-continuous-integration-overview)
       + [1.1 What is Continuous Integration (CI)?](#11-what-is-continuous-integration-ci)
       + [1.2 Why do Continuous Integration (CI)?](#12-why-do-continuous-integration-ci)
@@ -73,7 +73,7 @@
       + [4.1 Mocking](#41-mocking)
       + [4.2 Testable Design](#42-testable-design)
         <br/><br/>
-+ [Part 6: Static Analyzers of QuestDB](#part-6-static-analyzers-of-questdb)
++ [Part 6. Static Analyzers of QuestDB](#part-6-static-analyzers-of-questdb)
   + [1. Static Analyzers](#1-static-analyzers)
   + [2. Implementation of SpotBugs](#2-implementation-of-spotBugs)
       + [2.1 Introduction of SpotBugs](#21-introduction-of-spotBugs)
@@ -125,7 +125,7 @@ The pull request has been approved and merged. Our codes are [part of their main
 <div style="page-break-after: always;"></div>
 
 
-# Part 1: Introduction/ Set Up/ Functional Testing and Partitioning of QuestDB
+# Part 1. Introduction/ Set Up/ Functional Testing and Partitioning of QuestDB
 
 **Table of Contents**
 + [1. QuestDB Overview](#1-questdb-overview)
@@ -625,16 +625,16 @@ With the modified source code, we pass all the tests that the original official 
 <div style="page-break-after: always;"></div>
 
 
-# Part 2: Functional Testing and Finite State Machines of QuestDB
+# Part 2. Functional Testing and Finite State Machines of QuestDB
 
 **Table of Contents**
-+ [1. Finite Models for Testing](#1-finite-models-for-testing-a-namefirsta)
-+ [2. Implementations of Finite State Machine](#2-implementations-of-finite-state-machine-a-nameseconda)
-+ [3. New JUnit Test Cases of Finite State Machine](#3-new-junit-test-cases-of-finite-state-machine-a-namethirda)
++ [1. Finite Models for Testing](#1-finite-models-for-testing)
++ [2. Implementations of Finite State Machine](#2-implementations-of-finite-state-machine)
++ [3. New JUnit Test Cases of Finite State Machine](#3-new-junit-test-cases-of-finite-state-machine)
 
 ---
 
-## 1. Finite Models for Testing <a name="first"></a>
+## 1. Finite Models for Testing
 
 [A finite-state machine (FSM) or finite-state automaton (FSA, plural: automata)](https://en.wikipedia.org/wiki/Finite-state_machine), finite automaton, or simply a state machine, is a mathematical model of computation. It is an abstract machine that can be in exactly one of a finite number of states at any given time. They are useful for testing because they allow you to isolate specific parts of a system and test them in a controlled environment without having to worry about the complexity of the overall system.
 
@@ -644,7 +644,7 @@ Advantages of using FSM to implement testing:
 - Make it easier to perform large-scale and repetitive testing. This can also reduce the cost of testing, as it minimizes the need for manual intervention.
 - Help to test the performance of a system, by modeling different load conditions and measuring how the system behaves under stress.
 
-## 2. Implementations of Finite State Machine <a name="second"></a>
+## 2. Implementations of Finite State Machine
 
 We have selected a component of the TABLE in QuestDB to construct our finite state machine, which comprises two distinct states, referred to as nodes: `Empty Table` and `Non-empty Table`. These two states represent the current state of the table and determine the actions that can be performed on it.
 
@@ -659,7 +659,7 @@ Transitions between these two states are executed through two primary actions, r
    <img src="https://i.imgur.com/H7qBEV1.png"  width="500" align="center">
 </p>
 
-## 3. New JUnit Test Cases of Finite State Machine <a name="third"></a>
+## 3. New JUnit Test Cases of Finite State Machine
 
 We have enhanced our previous finite state machine implementation by incorporating 6 JUnit test cases located in the `core/src/test/java/testingdebugging/FSMTest.java` file. By utilizing JUnit, we are able to automate the testing process and verify the proper functioning of our finite state machine. This helps to identify and fix potential bugs, and ensures the code remains reliable and consistent as changes are made.
 
@@ -853,21 +853,21 @@ public void testQuestDBStateMachineAtNonEmptyTableStateTruncate() throws Excepti
 # Part 3. White Box Testing and Coverage of QuestDB
 
 **Table of Contents**
-+ [1. Structural Testing](#1-structural-testing-a-namefirsta)
-+ [2. Coverage of the Existing Test Suite](#2-coverage-of-the-existing-test-suite-a-nameseconda)
++ [1. Structural Testing](#1-structural-testing)
++ [2. Coverage of the Existing Test Suite](#2-coverage-of-the-existing-test-suite)
     + [2.1 Coverage Metrics](#21-coverage-metrics)
     + [2.2 Coverage Results](#22-coverage-results)
     + [2.3 Uncovered Test Cases](#23-uncovered-test-cases)
-+ [3. New JUnit Test Cases of Structural Testing](#3-new-junit-test-cases-of-finite-state-machine-a-namethirda)
++ [3. New JUnit Test Cases of Structural Testing](#3-new-junit-test-cases-of-structural-testing)
     + [3.1 New JUnit test case1](#31-new-junit-test-case1)
     + [3.2 New JUnit test case2](#32-new-junit-test-case2)
     + [3.3 New JUnit test case3](#33-new-junit-test-case3)
-+ [4. Conclusion](#4-conclusion-a-namefourtha)
++ [4. Conclusion](#4-conclusion)
 
 ---
 <p style="page-break-after:always"></p>
 
-## 1. Structural Testing <a name="first"></a>
+## 1. Structural Testing
 
 [Structural testing, also known as white-box testing](https://en.wikipedia.org/wiki/White-box_testing), is a software testing technique that evaluates the internal structure of the application being tested, rather than just its functionality ([black-box testing](https://en.wikipedia.org/wiki/Black-box_testing)). This involves analyzing individual components, modules, and source code to verify that the application performs as intended and that all code paths are executed correctly.
 
@@ -883,7 +883,7 @@ In summary, structural testing is essential for ensuring the quality of the soft
 
 <p style="page-break-after:always"></p>
 
-## 2. Coverage of the Existing Test Suite <a name="second"></a>
+## 2. Coverage of the Existing Test Suite
 
 ### 2.1 Coverage Metrics
 
@@ -955,7 +955,7 @@ The testing of QuestDB is already quite comprehensive; however, classes and meth
 
 <p style="page-break-after:always"></p>
 
-## 3. New JUnit Test Cases of Structural Testing <a name="third"></a>
+## 3. New JUnit Test Cases of Structural Testing 
 
 ### 3.1 New JUnit test case1
 
@@ -1113,7 +1113,7 @@ public void testToString() {
 
 <p style="page-break-after:always"></p>
 
-## 4. Conclusion <a name="fourth"></a>
+## 4. Conclusion 
 
 After adding three new JUnit test cases, we conducted white-box testing with JaCoCo again. All four metrics showed an increase in coverage: there was a one-class coverage increase, an 18-method coverage increase, an 83-line coverage increase, and a 40-branch coverage increase.
 
@@ -1128,7 +1128,7 @@ After adding three new JUnit test cases, we conducted white-box testing with JaC
 <div style="page-break-after: always;"></div>
 
 
-# Part 4: Continuous Integration of QuestDB
+# Part 4. Continuous Integration of QuestDB
 
 **Table of Contents**
 + [1. Continuous Integration Overview](#1-continuous-integration-overview)
@@ -1636,7 +1636,7 @@ public class MockedEpollTest {
 <div style="page-break-after: always;"></div>
 
 
-# Part 6: Static Analyzers of QuestDB
+# Part 6. Static Analyzers of QuestDB
 
 **Table of Contents**
 + [1. Static Analyzers](#1-static-analyzers)
